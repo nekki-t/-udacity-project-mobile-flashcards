@@ -1,6 +1,6 @@
 import {
-  APP_STARTING,
-  APP_STARTED,
+  DECK_LIST_LOADING,
+  DECK_LIST_LOADED,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -8,23 +8,18 @@ const initialState = {
   decks: []
 };
 
-
 export default (state = initialState, action = {}) => {
   const {
     loading,
-    decks
+    decks,
   } = action;
-  switch(action.type) {
-    case APP_STARTING:
+  switch (action.type) {
+    case DECK_LIST_LOADING:
+    case DECK_LIST_LOADED:
       return {
         ...state,
         loading,
-      };
-    case APP_STARTED:
-      return {
-        ...state,
         decks,
-        loading,
       };
     default:
       return state;

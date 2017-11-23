@@ -1,26 +1,38 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 /*--- Redux ---*/
 import { Provider } from 'react-redux';
 
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 
+/*--- Shared ---*/
+import { dark_gray, black, white } from './utils/colors';
+
+/*--- Components ---*/
+import FlashcardStatusBar from './components/FlashcardStatusBar';
+import DeckList from './components/DeckList';
+
+/*--- Store ---*/
 import createStore from './createStore';
-
 const store = createStore();
 
+/*--- Navigator ---*/
+const MainNavigator = StackNavigator({
+  Home: {
+    screen: DeckList,
+  },
+});
 
-export default class App extends React.Component {
+export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <View style={styles.container}>
-          <Text>Open up App.js to start working on your app!</Text>
-          <Text>Changes you make will automatically reload.</Text>
-          <Text>Shake your phone to open the developer menu.</Text>
+          <FlashcardStatusBar backgroundColor={black} barStyle='light-content'/>
+          <MainNavigator/>
         </View>
       </Provider>
-
     );
   }
 }
@@ -28,8 +40,6 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: dark_gray,
   },
 });

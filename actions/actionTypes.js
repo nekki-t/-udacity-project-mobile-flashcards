@@ -1,2 +1,6 @@
 export const APP_STARTING = 'APP_STARTING';
 export const APP_STARTED = 'APP_STARTED';
+
+export const DECK_LIST_LOADING = 'DECK_LIST_LOADING';
+export const DECK_LIST_LOADED = 'DECK_LIST_LOADED';
+
