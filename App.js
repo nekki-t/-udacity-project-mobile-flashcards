@@ -12,15 +12,20 @@ import { dark_gray, black, white } from './utils/colors';
 /*--- Components ---*/
 import FlashcardStatusBar from './components/FlashcardStatusBar';
 import DeckList from './components/DeckList';
+import Deck from './components/Deck';
 
 /*--- Store ---*/
 import createStore from './createStore';
+
 const store = createStore();
 
 /*--- Navigator ---*/
 const MainNavigator = StackNavigator({
   Home: {
     screen: DeckList,
+  },
+  Deck: {
+    screen: Deck,
   },
 });
 

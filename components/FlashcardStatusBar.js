@@ -6,12 +6,12 @@ import { Constants } from 'expo';
 
 const FlashcardStatusBar = ({backgroundColor, ...props}) => (
   <View style={{backgroundColor, height: Constants.statusBarHeight}}>
-    <StatusBar translucent backgroundColor={backgroundColor} {...props}/>
+    <StatusBar translucent backgroundColor={backgroundColor} {...props} />
   </View>
 );
 
 FlashcardStatusBar.propTypes = {
-  backgroundColor: PropTypes.object.isRequired
+  backgroundColor: PropTypes.string.isRequired
 };
 
 export default FlashcardStatusBar;
