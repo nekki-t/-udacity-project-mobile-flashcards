@@ -4,10 +4,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { loadDeckList } from '../actions/deckActions';
 
-import { Animated, FlatList, Text, View, } from 'react-native';
+import { Animated, FlatList, Platform, Text, TouchableOpacity, View } from 'react-native';
 import { AppLoading } from 'expo';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 /*--- utils ---*/
-import { darkest_gray, dark_gray, pink } from '../utils/colors';
+import { white } from '../utils/colors';
 import { deckListStyles } from '../utils/styles';
 import DeckItem from "./DeckItem";
 
@@ -16,16 +17,8 @@ import DeckItem from "./DeckItem";
 class DeckList extends Component {
   static navigationOptions = ({navigation}) => ({
     title: 'Mobile Flashcard',
-    headerTitleStyle: {
-      textAlign: 'center',
-      alignSelf: 'center',
-      fontSize: 30,
-      color: pink,
-    },
-    headerStyle: {
-      backgroundColor: darkest_gray,
-      paddingBottom: 10,
-    },
+    headerTitleStyle: deckListStyles.headerTitleStyle,
+    headerStyle: deckListStyles.headerStyle,
   });
 
   constructor(props) {
@@ -38,9 +31,9 @@ class DeckList extends Component {
     };
 
     this.renderItem = this.renderItem.bind(this);
-    this.onPressDeck = this.onPressDeck.bind(this)
+    this.onPressDeck = this.onPressDeck.bind(this);
+    this.onPressAdd = this.onPressAdd.bind(this);
   }
-
 
   componentDidMount() {
     this.props.actions.loadDeckList();
@@ -62,8 +55,11 @@ class DeckList extends Component {
   }
 
   onPressDeck = (deck) => {
-    console.log(deck);
-    this.props.navigation.navigate('Deck');
+    this.props.navigation.navigate('Deck', {deck});
+  };
+
+  onPressAdd = () => {
+    this.props.navigation.navigate('NewDeck');
   };
 
   renderItem = (data) => {
@@ -90,6 +86,16 @@ class DeckList extends Component {
             loading...
           </Text>
         }
+        <TouchableOpacity
+          onPress={this.onPressAdd}
+        >
+          <View style={deckListStyles.addButton}>
+            {Platform.OS === 'ios'
+              ? <Ionicons name='ios-add-outline' size={40} color={white}/>
+              : <MaterialIcons name='md-add' size={40} color={white}/>
+            }
+          </View>
+        </TouchableOpacity>
       </View>
     )
   }

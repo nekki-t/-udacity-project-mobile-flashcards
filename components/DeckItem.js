@@ -11,8 +11,11 @@ const DeckItem = ({deck, onPress}) => {
           <Text style={deckItemStyles.titleText}>
             {deck.contents.title}
           </Text>
+          <Text style={deckItemStyles.cardCount}>
+            {deck.contents.cards.length} cards
+          </Text>
         </View>
-        <View style={deckItemStyles.subTitle}>
+        <View style={deckItemStyles.details}>
           <Text style={deckItemStyles.subTitleText}>
             {deck.contents.trained} times trained
           </Text>

@@ -12,3 +12,9 @@ export const lightPurp = '#7c53c3';
 export const pink = '#b93fb3';
 export const green = '#25ff26';
 export const yellow = '#fdff1f';
+
+
+export const buttonBorderColor = '#fff';
+export const buttonBackgroundColor= '#bb0c60';
+export const buttonTextColor= white;
+export const buttonDisabledColor = `${white}5`;

@@ -13,6 +13,7 @@ import { dark_gray, black, white } from './utils/colors';
 import FlashcardStatusBar from './components/FlashcardStatusBar';
 import DeckList from './components/DeckList';
 import Deck from './components/Deck';
+import NewDeck from './components/NewDeck';
 
 /*--- Store ---*/
 import createStore from './createStore';
@@ -26,6 +27,9 @@ const MainNavigator = StackNavigator({
   },
   Deck: {
     screen: Deck,
+  },
+  NewDeck: {
+    screen: NewDeck,
   },
 });
 

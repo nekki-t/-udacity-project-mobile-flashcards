@@ -17,6 +17,7 @@ export const TEMP_DATA = [
         ],
       trained: 2,
       average: 70.3,
+      cards: [],
     }
   }
   ,
@@ -33,6 +34,7 @@ export const TEMP_DATA = [
         ],
       trained: 5,
       average: 65.4,
+      cards: [],
     }
   }
 ];

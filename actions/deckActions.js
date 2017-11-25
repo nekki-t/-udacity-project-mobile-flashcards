@@ -22,3 +22,9 @@ export const loadDeckList = () => {
       )
   }
 };
+
+export const createDeck = (id, title) => {
+  return dispatch => {
+    dispatch(loadDeckList())
+  };
+};
