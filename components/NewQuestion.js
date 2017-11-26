@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-
 /*--- redux ---*/
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 /*--- react-natives ---*/
-import { View, Text, TextInput } from 'react-native';
-
+import { Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
 /*--- utils ---*/
 import { newQuestionStyles } from '../utils/styles';
-
 /*--- Components ---*/
 import Spinner from './Spinner';
 
@@ -35,13 +31,13 @@ class NewQuestion extends Component {
 
   onChangeQuestion = (value) => {
     this.setState({
-      question: value.trim()
+      question: value
     })
   };
 
   onChangeAnswer = (value) => {
     this.setState({
-      answer: value.trim()
+      answer: value
     });
   };
 
@@ -52,11 +48,41 @@ class NewQuestion extends Component {
       return <Spinner size='large'/>
     }
     return (
-      <View>
-        <Text>
-          Loading...
-        </Text>
-      </View>
+
+      <KeyboardAvoidingView behavior='padding' style={newQuestionStyles.container}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View>
+            <Text style={newQuestionStyles.label}>
+              What is the question of this card?
+            </Text>
+            <TextInput
+              placeholder='input the question within 100 characters'
+              value={question}
+              onChangeText={this.onChangeQuestion}
+              autoFocus={true}
+              maxLength={100}
+              multiline={true}
+              blurOnSubmit={false}
+              numberOfLines={4}
+              style={newQuestionStyles.input}
+            />
+              <Text style={newQuestionStyles.label}>
+                What is the answer for the question?
+              </Text>
+              <TextInput
+                placeholder='input the answer within 100 characters'
+                value={answer}
+                onChangeText={this.onChangeAnswer}
+                maxLength={100}
+                multiline={true}
+                blurOnSubmit={false}
+                numberOfLines={4}
+                style={newQuestionStyles.input}
+              />
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+
     )
   }
 }

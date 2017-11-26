@@ -86,7 +86,7 @@ class NewDeck extends Component {
           What is the title of your new deck?
         </Text>
         <TextInput
-          placeholder='input the title within 20 characters'
+          placeholder='Input the title within 20 characters'
           value={title}
           onChangeText={this.onChangeTitle}
           autoFocus={true}

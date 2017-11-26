@@ -215,14 +215,15 @@ export const newQuestionStyles = StyleSheet.create({
     }
   ]),
   label: {
-    fontSize: 30,
+    fontSize: 15,
     color: white,
     padding: 20,
   },
   input: {
-    fontSize: 20,
+    fontSize: 15,
     backgroundColor: '#ccc',
-    padding: 20,
+    padding: 5,
+    height: 100,
   },
   addButton: {
     marginTop: 10,
