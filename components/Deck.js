@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Text, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 /*--- utils ---*/
 import { deckStyles } from '../utils/styles';
-
 /*--- Components ---*/
 import DeckItem from './DeckItem';
 import Button from './Button';
+import QuestionItem from './QuestionItem';
 
 class Deck extends Component {
   static navigationOptions = ({navigation}) => {
@@ -33,11 +33,19 @@ class Deck extends Component {
   };
 
   startQuiz = () => {
-    console.log('play quiz');
+    this.props.navigation.navigate('Quiz');
   };
 
   addCard = () => {
-    console.log('add card');
+    this.props.navigation.navigate('NewQuestion');
+  };
+
+  renderQuestions = (data) => {
+    return (
+      <QuestionItem
+        question={data.item}
+      />
+    )
   };
 
   render() {
@@ -60,11 +68,11 @@ class Deck extends Component {
             Start Quiz
           </Button>
         </View>
-        <View>
-          <Text>
-            Cards
-          </Text>
-        </View>
+        <FlatList
+          data={deck.contents.questions}
+          renderItem={this.renderQuestions}
+          style={{alignSelf: 'stretch'}}
+        />
       </View>
     );
   }

@@ -3,8 +3,7 @@ import { TEMP_DATA, UDACITY_FLASHCARD_STORAGE_KEY } from './constants';
 
 class FlashcardApi {
   static getDecks() {
-    //return AsyncStorage.clear();
-
+    // return AsyncStorage.clear();
     return AsyncStorage.getItem(UDACITY_FLASHCARD_STORAGE_KEY)
       .then((result) => {
         let data = JSON.parse(result);
@@ -25,8 +24,13 @@ class FlashcardApi {
 
   }
 
-  static saveDeckTitle(title) {
-
+  static createDeck(newDeck) {
+    return AsyncStorage.getItem(UDACITY_FLASHCARD_STORAGE_KEY)
+      .then((result) => {
+        let data = JSON.parse(result);
+        data.push(newDeck);
+        return AsyncStorage.setItem(UDACITY_FLASHCARD_STORAGE_KEY, JSON.stringify(data));
+      })
   }
 
   static addCardToDeck(title, card) {

@@ -7,17 +7,15 @@ import { bindActionCreators } from 'redux';
 /*--- Actions ---*/
 import { createDeck } from '../actions/deckActions';
 
-import { View, Text, TextInput, Modal, Alert } from 'react-native';
+import { View, Text, TextInput, Alert } from 'react-native';
 
 /*--- utils ---*/
 import { newDeckStyles } from '../utils/styles';
-
-/*--- libraries ---*/
-import shortId from 'shortid';
-
+import sharedFunctions from '../utils/sharedFunctions';
 
 /*--- components ---*/
 import Button from './Button';
+import Spinner from './Spinner';
 
 class NewDeck extends Component {
 
@@ -42,7 +40,7 @@ class NewDeck extends Component {
 
   onChangeTitle = (value) => {
     this.setState({
-      title: value
+      title: value.trim()
     });
   };
 
@@ -60,20 +58,28 @@ class NewDeck extends Component {
       );
       return;
     }
-    try{
-      await this.props.actions.createDeck(shortId.generate(), value);
+    const newDeck = sharedFunctions.generateNewDeck(value);
+    try {
+      await this.props.actions.createDeck(newDeck);
       Alert.alert(
         'Deck created!',
-        'Please press OK to check the deck in the list.',
+        'Go back to the list to deck it!',
         [{text: 'OK', onPress: () => this.props.navigation.goBack()}]
       );
-    } catch(error) {
-      console.log('test');
+    } catch (error) {
+      Alert.alert(
+        'Error!',
+        'Sorry... But there is something wrong. I will fix this soon.',
+        [{text: 'OK', onPress: () => console.log(error)}]
+      );
     }
   }
 
   render() {
     const {title} = this.state;
+    if (this.props.loading) {
+      return <Spinner size='large'/>
+    }
     return (
       <View style={newDeckStyles.container}>
         <Text style={newDeckStyles.label}>
@@ -100,12 +106,14 @@ class NewDeck extends Component {
 }
 
 const mapStateToProps = (state, {navigation}) => {
-  return {};
+  return {
+    loading: state.deck.loading
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ createDeck }, dispatch)
+    actions: bindActionCreators({createDeck}, dispatch)
   };
 };
 

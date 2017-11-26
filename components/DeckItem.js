@@ -12,7 +12,7 @@ const DeckItem = ({deck, onPress}) => {
             {deck.contents.title}
           </Text>
           <Text style={deckItemStyles.cardCount}>
-            {deck.contents.cards.length} cards
+            {deck.contents.questions.length} cards
           </Text>
         </View>
         <View style={deckItemStyles.details}>

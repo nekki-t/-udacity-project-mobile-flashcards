@@ -7,6 +7,7 @@ export const TEMP_DATA = [
       questions:
         [
           {
+            key: 'a',
             question: 'What is React?',
             answer: 'A library for managing user interfaces'
           },
@@ -28,13 +29,13 @@ export const TEMP_DATA = [
       questions:
         [
           {
+            key: 'b',
             question: 'What is a closure?',
             answer: 'The combination of a function and the lexical environment within which that function was declared.'
           }
         ],
       trained: 5,
       average: 65.4,
-      cards: [],
     }
   }
 ];

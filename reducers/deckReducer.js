@@ -1,6 +1,8 @@
 import {
   DECK_LIST_LOADING,
   DECK_LIST_LOADED,
+  DECK_CREATING,
+  DECK_CREATED,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -20,6 +22,11 @@ export default (state = initialState, action = {}) => {
         ...state,
         loading,
         decks,
+      };
+    case DECK_CREATING:
+    case DECK_CREATED:
+      return {
+        loading,
       };
     default:
       return state;

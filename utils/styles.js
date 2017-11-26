@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 import {
+  black,
+  blue,
   dark_gray,
   darker_gray,
   darkest_gray,
@@ -22,6 +24,15 @@ export const commonStyles = StyleSheet.create({
     },
     shadowRadius: 3,
     shadowOpacity: 1,
+  }
+});
+
+export const spinnerStyles = StyleSheet.create({
+  spinnerStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(52, 52, 52, 0.9)'
   }
 });
 
@@ -187,4 +198,58 @@ export const newDeckStyles = StyleSheet.create({
   addButton: {
     marginTop: 10,
   }
+});
+
+/* === < New Card > =================================================================== */
+export const newQuestionStyles = StyleSheet.create({
+  headerStyle: StyleSheet.flatten([navigationCommonStyles.headerStyle,]),
+  headerTitleStyle: StyleSheet.flatten([navigationCommonStyles.headerTitleStyle,
+    {
+      color: green,
+    }
+  ]),
+  container: StyleSheet.flatten([containerCommonStyles.container,
+    {
+      padding: 20,
+      justifyContent: 'flex-start',
+    }
+  ]),
+  label: {
+    fontSize: 30,
+    color: white,
+    padding: 20,
+  },
+  input: {
+    fontSize: 20,
+    backgroundColor: '#ccc',
+    padding: 20,
+  },
+  addButton: {
+    marginTop: 10,
+  }
+});
+
+/* === < QuestionItem > =================================================================== */
+export const questionItemStyles = StyleSheet.create({
+  container: {
+    backgroundColor: dark_gray,
+    marginBottom: 10,
+    borderColor: white,
+    height: 150,
+    borderWidth: 1,
+    justifyContent: 'center',
+    padding: 20,
+    backfaceVisibility: 'hidden',
+  },
+  backSide: {
+    backgroundColor: white,
+  },
+  titleText: {
+    color: white,
+    fontSize: 20,
+  },
+  backSideText: {
+    color: black,
+    fontSize: 20,
+  },
 });

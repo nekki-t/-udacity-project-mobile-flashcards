@@ -1,6 +1,8 @@
 import {
   DECK_LIST_LOADING,
-  DECK_LIST_LOADED
+  DECK_LIST_LOADED,
+  DECK_CREATING,
+  DECK_CREATED,
 } from './actionTypes';
 import FlashcardApi from '../utils/flashcardApi';
 
@@ -23,8 +25,21 @@ export const loadDeckList = () => {
   }
 };
 
-export const createDeck = (id, title) => {
+export const createDeck = (newDeck) => {
   return dispatch => {
-    dispatch(loadDeckList())
+    dispatch({
+      type: DECK_CREATING,
+      loading: true,
+    });
+    return FlashcardApi.createDeck(newDeck)
+      .then(
+        () => {
+          dispatch({
+            type: DECK_CREATED,
+            loading: false,
+          });
+          dispatch(loadDeckList())
+        }
+      )
   };
 };

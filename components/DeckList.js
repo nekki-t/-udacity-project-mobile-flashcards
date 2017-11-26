@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { loadDeckList } from '../actions/deckActions';
 
 import { Animated, FlatList, Platform, Text, TouchableOpacity, View } from 'react-native';
-import { AppLoading } from 'expo';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 /*--- utils ---*/
 import { white } from '../utils/colors';
@@ -13,6 +12,7 @@ import { deckListStyles } from '../utils/styles';
 import DeckItem from "./DeckItem";
 
 /*--- Components ---*/
+import Spinner from './Spinner';
 
 class DeckList extends Component {
   static navigationOptions = ({navigation}) => ({
@@ -68,11 +68,11 @@ class DeckList extends Component {
     );
   };
 
-
   render() {
     const {init} = this.state;
-    if (init) {
-      return <AppLoading/>
+    const {loading} = this.state;
+    if (init || loading) {
+      return <Spinner size='large'/>
     }
 
     return (

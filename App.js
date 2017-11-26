@@ -14,6 +14,8 @@ import FlashcardStatusBar from './components/FlashcardStatusBar';
 import DeckList from './components/DeckList';
 import Deck from './components/Deck';
 import NewDeck from './components/NewDeck';
+import NewQuestion from './components/NewQuestion';
+import Quiz from './components/Quiz';
 
 /*--- Store ---*/
 import createStore from './createStore';
@@ -31,6 +33,12 @@ const MainNavigator = StackNavigator({
   NewDeck: {
     screen: NewDeck,
   },
+  NewQuestion: {
+    screen: NewQuestion,
+  },
+  Quiz: {
+    screen: Quiz,
+  }
 });
 
 export default class App extends Component {

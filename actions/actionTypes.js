@@ -1,6 +1,11 @@
-export const APP_STARTING = 'APP_STARTING';
-export const APP_STARTED = 'APP_STARTED';
-
+/*--- Deck ---*/
 export const DECK_LIST_LOADING = 'DECK_LIST_LOADING';
 export const DECK_LIST_LOADED = 'DECK_LIST_LOADED';
+export const DECK_CREATING = 'DECK_CREATING';
+export const DECK_CREATED = 'DECK_CREATED';
+/*--- Question ---*/
+export const QUESTIONS_LOADING = 'QUESTIONS_LOADING';
+export const QUESTIONS_LOADED = 'QUESTIONS_LOADED';
+export const QUESTION_CREATING = 'QUESTION_CREATING';
+export const QUESTION_CREATED = 'QUESTION_CREATED';
 
