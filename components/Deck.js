@@ -33,7 +33,7 @@ class Deck extends Component {
   };
 
   startQuiz = () => {
-    this.props.navigation.navigate('Quiz');
+    this.props.navigation.navigate('Quiz', {deck: this.props.deck});
   };
 
   addCard = () => {

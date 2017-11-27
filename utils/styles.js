@@ -259,7 +259,7 @@ export const quizStyles = StyleSheet.create({
   headerStyle: StyleSheet.flatten([navigationCommonStyles.headerStyle,]),
   headerTitleStyle: StyleSheet.flatten([navigationCommonStyles.headerTitleStyle,
     {
-      color: yellow,
+      color: white,
     }
   ]),
   container: StyleSheet.flatten([containerCommonStyles.container,
@@ -268,4 +268,58 @@ export const quizStyles = StyleSheet.create({
       justifyContent: 'flex-start',
     }
   ]),
+  progressInfoArea: {
+    alignItems: 'center',
+  },
+  progressBarArea: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    backgroundColor: darkest_gray,
+    position: 'absolute',
+    top: 15,
+    left: 10,
+    right: 10,
+    padding: 0,
+    borderRadius: 30,
+  },
+  progressBarValue: {
+    backgroundColor: pink,
+    height: 10,
+    width: 200,
+    flexDirection: 'row',
+    overflow: 'hidden',
+    borderRadius: 30,
+  },
+  progressTextArea: {
+    marginTop: 30,
+    alignItems: 'center',
+  },
+  progressText: {
+    fontSize: 20,
+    color: pink,
+  },
+  deckNameArea: {
+    backgroundColor: darkest_gray,
+    borderColor: white,
+    borderWidth: 1,
+    padding: 10,
+  },
+  deckNameText: {
+    color: yellow,
+    textAlign: 'center',
+    fontSize: 30,
+  },
+  scoreArea: {
+    backgroundColor: darkest_gray,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 50,
+    justifyContent: 'center',
+  }
+
 });
+
+/* === < Progressbar > =================================================================== */

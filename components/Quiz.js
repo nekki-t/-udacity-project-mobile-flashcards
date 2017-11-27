@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
-
 /*--- redux ---*/
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 /*--- react-native ---*/
-import { View, Text, Animated } from 'react-native';
-
+import { Animated, Text, View, Dimensions } from 'react-native';
 /*--- utils ---*/
 import { quizStyles } from '../utils/styles';
 
 /*--- Components ---*/
-import Progressbar from './Progressbar';
 
 class Quiz extends Component {
 
@@ -26,34 +22,72 @@ class Quiz extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      started: false,
+      deck: this.props.deck,
       currentIndex: 0,
       currentProgress: new Animated.Value(0),
-    }
+      correctCount: 0,
+    };
+
+    this.onStartPressed = this.onStartPressed.bind(this);
   }
 
+  onStartPressed = () => {
+    this.setState({
+      started: true,
+    })
+  };
+
   render() {
-    const { currentIndex, currentProgress } = this.state;
+    const {deck, finished, currentIndex, currentProgress} = this.state;
+    const {width} = Dimensions.get('window');
+    console.log(width);
+    console.log(deck);
+
     return (
       <View style={quizStyles.container}>
-        <View>
-          <Text>
-            Progressbar
+        <View style={quizStyles.deckNameArea}>
+          <Text style={quizStyles.deckNameText}>
+            {deck.contents.title}
           </Text>
-          <Text>
-            Progress Count
+        </View>
+        <View style={quizStyles.progressInfoArea}>
+          <View style={quizStyles.progressBarArea}>
+            <View style={quizStyles.progressBarValue}>
+            </View>
+          </View>
+        </View>
+        <View style={quizStyles.progressTextArea}>
+          <Text style={quizStyles.progressText}>
+            3 / 10
           </Text>
         </View>
 
-        <Text>
-          Quiz comes here!
-        </Text>
+        <View>
+          <Text>
+            Quiz
+          </Text>
+        </View>
+        <View>
+          <Text>
+            Button Area
+          </Text>
+        </View>
+        <View style={quizStyles.scoreArea}>
+          <Text>
+            Score Area
+          </Text>
+        </View>
       </View>
     )
   }
 }
 
-const mapStateToProps = (state) => {
-  return {}
+const mapStateToProps = (state, {navigation}) => {
+  const {deck} = navigation.state.params;
+  return {
+    deck,
+  }
 };
 
 const mapDispatchToProps = (dispatch) => {
