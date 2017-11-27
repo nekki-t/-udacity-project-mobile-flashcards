@@ -3,6 +3,8 @@ import {
   DECK_LIST_LOADED,
   DECK_CREATING,
   DECK_CREATED,
+  DECK_UPDATING,
+  DECK_UPDATED,
 } from './actionTypes';
 import FlashcardApi from '../utils/flashcardApi';
 
@@ -43,3 +45,23 @@ export const createDeck = (newDeck) => {
       )
   };
 };
+
+export const updateDeck = (targetDeck) => {
+  return dispatch => {
+    dispatch({
+      type: DECK_UPDATING,
+      loading: true,
+    });
+    return FlashcardApi.updateDeck(targetDeck)
+      .then(
+        () => {
+          dispatch({
+            type: DECK_UPDATED,
+            loading: false,
+          });
+          dispatch(loadDeckList());
+        }
+      )
+  };
+};
+

@@ -2,12 +2,25 @@ import React, { Component } from 'react';
 /*--- redux ---*/
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { updateDeck } from '../actions/deckActions';
+
 /*--- react-natives ---*/
-import { Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Text,
+  TextInput,
+  TouchableWithoutFeedback,
+  View,
+  Alert,
+} from 'react-native';
 /*--- utils ---*/
 import { newQuestionStyles } from '../utils/styles';
+import { TEXT_LIMIT } from '../utils/constants';
 /*--- Components ---*/
 import Spinner from './Spinner';
+import Button from './Button';
+import SharedFunctions from "../utils/sharedFunctions";
 
 class NewQuestion extends Component {
   static navigationOptions = ({navigation}) => {
@@ -17,7 +30,6 @@ class NewQuestion extends Component {
       headerStyle: newQuestionStyles.headerStyle,
     };
   };
-
   state = {
     question: '',
     answer: ''
@@ -27,6 +39,7 @@ class NewQuestion extends Component {
     super();
     this.onChangeQuestion = this.onChangeQuestion.bind(this);
     this.onChangeAnswer = this.onChangeAnswer.bind(this);
+    this.onAddPressed = this.onAddPressed.bind(this);
   }
 
   onChangeQuestion = (value) => {
@@ -41,6 +54,38 @@ class NewQuestion extends Component {
     });
   };
 
+  async onAddPressed() {
+    const { question, answer } = this.state;
+    let tmpQuestion = question.trim();
+    let tmpAnswer = answer.trim();
+    if(tmpQuestion.length < 1 || tmpAnswer.length < 1) {
+      Alert.alert(
+        'Invalid question or answer',
+        `Please input both of the question and the answer with in ${TEXT_LIMIT.Question} characters.`,
+        [{text: 'OK', onPress: () => console.log('OK')}]
+      );
+      return;
+    }
+    const newQuestion = SharedFunctions.generateNewQuestion(tmpQuestion, tmpAnswer);
+    const targetDeck = Object.assign({}, this.props.deck);
+    targetDeck.contents.questions.push(newQuestion);
+
+    try {
+      await this.props.actions.updateDeck(targetDeck);
+      Alert.alert(
+        'Question created!',
+        'Go back to the deck to deck it!',
+        [{text: 'OK', onPress: () => this.props.navigation.goBack()}]
+      );
+    } catch(error) {
+      Alert.alert(
+        'Error!',
+        'Sorry... But there is something wrong. I will fix this soon.',
+        [{text: 'OK', onPress: () => console.log(error)}]
+      );
+    }
+  };
+
   render() {
     const {question, answer} = this.state;
 
@@ -48,7 +93,6 @@ class NewQuestion extends Component {
       return <Spinner size='large'/>
     }
     return (
-
       <KeyboardAvoidingView behavior='padding' style={newQuestionStyles.container}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View>
@@ -56,45 +100,53 @@ class NewQuestion extends Component {
               What is the question of this card?
             </Text>
             <TextInput
-              placeholder='input the question within 100 characters'
+              placeholder={`input the question within ${TEXT_LIMIT.Question} characters`}
               value={question}
               onChangeText={this.onChangeQuestion}
-              autoFocus={true}
-              maxLength={100}
+              maxLength={TEXT_LIMIT.Question}
               multiline={true}
               blurOnSubmit={false}
-              numberOfLines={4}
+              numberOfLines={3}
               style={newQuestionStyles.input}
             />
-              <Text style={newQuestionStyles.label}>
-                What is the answer for the question?
-              </Text>
-              <TextInput
-                placeholder='input the answer within 100 characters'
-                value={answer}
-                onChangeText={this.onChangeAnswer}
-                maxLength={100}
-                multiline={true}
-                blurOnSubmit={false}
-                numberOfLines={4}
-                style={newQuestionStyles.input}
-              />
+            <Text style={newQuestionStyles.label}>
+              What is the answer for the question?
+            </Text>
+            <TextInput
+              placeholder={`input the answer within ${TEXT_LIMIT.Answer} characters`}
+              value={answer}
+              onChangeText={this.onChangeAnswer}
+              maxLength={TEXT_LIMIT.Answer}
+              multiline={true}
+              blurOnSubmit={false}
+              numberOfLines={3}
+              style={newQuestionStyles.input}
+            />
+            <Button
+              onPress={this.onAddPressed}
+              style={newQuestionStyles.addButton}
+            >
+              Add Card
+            </Button>
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
-
     )
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, {navigation}) => {
+  const { deck } = navigation.state.params;
   return {
-    loading: state.question.loading
+    loading: state.question.loading,
+    deck,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({}, dispatch);
+  return {
+    actions: bindActionCreators({ updateDeck }, dispatch)
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewQuestion);

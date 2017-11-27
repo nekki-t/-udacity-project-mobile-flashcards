@@ -3,6 +3,8 @@ export const DECK_LIST_LOADING = 'DECK_LIST_LOADING';
 export const DECK_LIST_LOADED = 'DECK_LIST_LOADED';
 export const DECK_CREATING = 'DECK_CREATING';
 export const DECK_CREATED = 'DECK_CREATED';
+export const DECK_UPDATING = 'DECK_UPDATING';
+export const DECK_UPDATED = 'DECK_UPDATED';
 /*--- Question ---*/
 export const QUESTIONS_LOADING = 'QUESTIONS_LOADING';
 export const QUESTIONS_LOADED = 'QUESTIONS_LOADED';

@@ -33,8 +33,14 @@ class FlashcardApi {
       })
   }
 
-  static addCardToDeck(title, card) {
-
+  static updateDeck(deck) {
+    return AsyncStorage.getItem(UDACITY_FLASHCARD_STORAGE_KEY)
+      .then((result) => {
+        let data = JSON.parse(result);
+        let targetIndex = data.findIndex(item => item.key === deck.key);
+        data[targetIndex].contents = deck.contents;
+        return AsyncStorage.setItem(UDACITY_FLASHCARD_STORAGE_KEY, JSON.stringify(data));
+      })
   }
 }
 

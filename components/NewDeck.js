@@ -11,6 +11,7 @@ import { View, Text, TextInput, Alert } from 'react-native';
 
 /*--- utils ---*/
 import { newDeckStyles } from '../utils/styles';
+import { TEXT_LIMIT } from '../utils/constants';
 import sharedFunctions from '../utils/sharedFunctions';
 
 /*--- components ---*/
@@ -53,7 +54,7 @@ class NewDeck extends Component {
     if (value.length < 1) {
       Alert.alert(
         'Invalid title',
-        'Please input the title with in 20 characters.',
+        `Please input the title with in ${TEXT_LIMIT.DeckTitle} characters.`,
         [{text: 'OK', onPress: () => console.log('OK')}]
       );
       return;
@@ -86,11 +87,11 @@ class NewDeck extends Component {
           What is the title of your new deck?
         </Text>
         <TextInput
-          placeholder='Input the title within 20 characters'
+          placeholder={`Input the title within ${TEXT_LIMIT.DeckTitle} characters`}
           value={title}
           onChangeText={this.onChangeTitle}
           autoFocus={true}
-          maxLength={20}
+          maxLength={TEXT_LIMIT.DeckTitle}
           onFocus={this.onTitleFocused}
           style={newDeckStyles.input}
         />
@@ -105,7 +106,7 @@ class NewDeck extends Component {
   }
 }
 
-const mapStateToProps = (state, {navigation}) => {
+const mapStateToProps = (state) => {
   return {
     loading: state.deck.loading
   };

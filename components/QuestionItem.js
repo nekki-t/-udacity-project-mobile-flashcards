@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { View, Text, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, TouchableOpacity } from 'react-native';
 
 import { questionItemStyles } from '../utils/styles';
 
@@ -38,13 +38,12 @@ class QuestionItem extends Component {
 
     return (
       <TouchableOpacity onPress={this.toggle}>
-
-        <View style={[questionItemStyles.container, {display: this.state.front}]}>
+        <ScrollView style={[questionItemStyles.container, {display: this.state.front}]}>
           <Text style={questionItemStyles.titleText}>
             {question.question}
           </Text>
-        </View>
-        <View style={[
+        </ScrollView>
+        <ScrollView style={[
           questionItemStyles.container,
           questionItemStyles.backSide,
           {display: this.state.back}]
@@ -52,7 +51,7 @@ class QuestionItem extends Component {
           <Text style={questionItemStyles.backSideText}>
             {question.answer}
           </Text>
-        </View>
+        </ScrollView>
       </TouchableOpacity>
     )
   }

@@ -81,6 +81,7 @@ class DeckList extends Component {
           ? <FlatList
             data={this.props.decks}
             renderItem={this.renderItem}
+            keyExtractor={(item, index) => index}
           />
           : <Text>
             loading...

@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
   Text,
+  Keyboard,
 } from 'react-native';
 
 /*--- Utils ---*/
@@ -14,6 +15,7 @@ const Button = ({style, active, onPress, children, ...rest}) => (
   <TouchableOpacity
     activeOpacity={active ? 0.7 : 1}
     onPress={active? onPress: null}
+    onPressIn={Keyboard.dismiss}
     { ...rest }
     style={[buttonStyles.button, style, !active ? buttonStyles.buttonDisabled: {}]}
   >

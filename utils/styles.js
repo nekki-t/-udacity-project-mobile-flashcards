@@ -210,14 +210,14 @@ export const newQuestionStyles = StyleSheet.create({
   ]),
   container: StyleSheet.flatten([containerCommonStyles.container,
     {
-      padding: 20,
+      padding: 10,
       justifyContent: 'flex-start',
     }
   ]),
   label: {
     fontSize: 15,
     color: white,
-    padding: 20,
+    padding: 10,
   },
   input: {
     fontSize: 15,
@@ -227,7 +227,7 @@ export const newQuestionStyles = StyleSheet.create({
   },
   addButton: {
     marginTop: 10,
-  }
+  },
 });
 
 /* === < QuestionItem > =================================================================== */
@@ -236,9 +236,8 @@ export const questionItemStyles = StyleSheet.create({
     backgroundColor: dark_gray,
     marginBottom: 10,
     borderColor: white,
-    height: 150,
+    height: 170,
     borderWidth: 1,
-    justifyContent: 'center',
     padding: 20,
     backfaceVisibility: 'hidden',
   },
@@ -253,4 +252,20 @@ export const questionItemStyles = StyleSheet.create({
     color: black,
     fontSize: 20,
   },
+});
+
+/* === < Quiz > =================================================================== */
+export const quizStyles = StyleSheet.create({
+  headerStyle: StyleSheet.flatten([navigationCommonStyles.headerStyle,]),
+  headerTitleStyle: StyleSheet.flatten([navigationCommonStyles.headerTitleStyle,
+    {
+      color: yellow,
+    }
+  ]),
+  container: StyleSheet.flatten([containerCommonStyles.container,
+    {
+      padding: 10,
+      justifyContent: 'flex-start',
+    }
+  ]),
 });

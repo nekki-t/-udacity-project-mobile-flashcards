@@ -37,7 +37,7 @@ class Deck extends Component {
   };
 
   addCard = () => {
-    this.props.navigation.navigate('NewQuestion');
+    this.props.navigation.navigate('NewQuestion', {deck: this.props.deck});
   };
 
   renderQuestions = (data) => {
@@ -72,6 +72,7 @@ class Deck extends Component {
           data={deck.contents.questions}
           renderItem={this.renderQuestions}
           style={{alignSelf: 'stretch'}}
+          keyExtractor={(item, index) => index}
         />
       </View>
     );
@@ -82,7 +83,7 @@ const mapStateToProps = (state, {navigation}) => {
   const {deck} = navigation.state.params;
   return {
     loading: state.deck.loading,
-    deck
+    deck,
   }
 };
 

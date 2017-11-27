@@ -1,4 +1,9 @@
 export const UDACITY_FLASHCARD_STORAGE_KEY = 'Udacity:Flashcard';
+export const TEXT_LIMIT = {
+  DeckTitle: 20,
+  Question: 100,
+  Answer: 100,
+};
 export const TEMP_DATA = [
   {
     key: 'React',
