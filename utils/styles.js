@@ -6,6 +6,8 @@ import {
   darker_gray,
   darkest_gray,
   green,
+  dark_green,
+  red,
   pink,
   yellow,
   white,
@@ -298,6 +300,9 @@ export const quizStyles = StyleSheet.create({
   progressText: {
     fontSize: 20,
     color: pink,
+    textShadowColor: black,
+    textShadowOffset: {width: 2, height: 2},
+    textShadowRadius: 3,
   },
   deckNameArea: {
     backgroundColor: darkest_gray,
@@ -310,16 +315,82 @@ export const quizStyles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 30,
   },
+
+  question: StyleSheet.flatten([commonStyles.shadow, {
+    backgroundColor: white,
+    marginTop: 10,
+    marginBottom: 20,
+    borderColor: black,
+    height: 250,
+    borderWidth: 1,
+    padding: 20,
+    backfaceVisibility: 'hidden',
+    justifyContent: 'center',
+    alignContent: 'center',
+  }]),
+  backSide: {
+    backgroundColor: black,
+  },
+  questionText: {
+    color: black,
+    fontSize: 25,
+  },
+  backSideText: {
+    color: black,
+    fontSize: 20,
+  },
+  actionArea: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+  singleActionArea: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'flex-start',
+  },
+  showAnswerButton: {
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    height: 100,
+    width: '100%',
+    backgroundColor: blue,
+  },
+  correctButton: {
+    width: 150,
+    height: 100,
+    justifyContent: 'center',
+    backgroundColor: dark_green,
+  },
+  correctLabel: {
+    fontSize: 25,
+  },
+  inCorrectButton: {
+    width: 150,
+    height: 100,
+    justifyContent: 'center',
+    backgroundColor: red,
+  },
+  inCorrectLabel: {
+    fontSize: 25,
+  },
   scoreArea: {
-    backgroundColor: darkest_gray,
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    backgroundColor: black,
     height: 50,
     justifyContent: 'center',
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+  scoreText: {
+    color: pink,
+    fontSize: 30,
+    textShadowColor: yellow,
+    textShadowOffset: {width: 1, height: 1},
+    textShadowRadius: 1,
   }
-
 });
 
 /* === < Progressbar > =================================================================== */

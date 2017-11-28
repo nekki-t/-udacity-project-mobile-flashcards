@@ -23,14 +23,10 @@ class Deck extends Component {
 
   constructor() {
     super();
-    this.onDeckClick = this.onDeckClick.bind(this);
     this.startQuiz = this.startQuiz.bind(this);
     this.addCard = this.addCard.bind(this);
   }
 
-  onDeckClick = (deck) => {
-    console.log(deck);
-  };
 
   startQuiz = () => {
     this.props.navigation.navigate('Quiz', {deck: this.props.deck});
@@ -54,7 +50,7 @@ class Deck extends Component {
       <View style={deckStyles.container}>
         <DeckItem
           deck={deck}
-          onPress={this.onDeckClick}
+          onPress={this.startQuiz}
         />
         <View style={deckStyles.buttonArea}>
           <Button
@@ -64,6 +60,7 @@ class Deck extends Component {
           </Button>
           <Button
             onPress={this.startQuiz}
+            active={deck.contents.questions.length > 0}
           >
             Start Quiz
           </Button>

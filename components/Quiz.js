@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 /*--- react-native ---*/
-import { Animated, Text, View, Dimensions } from 'react-native';
+import { Animated, Dimensions, Text, View } from 'react-native';
 /*--- utils ---*/
 import { quizStyles } from '../utils/styles';
-
 /*--- Components ---*/
+import Button from './Button';
 
 class Quiz extends Component {
 
@@ -23,10 +23,12 @@ class Quiz extends Component {
     super(props);
     this.state = {
       started: false,
+      showAnswer: false,
       deck: this.props.deck,
       currentIndex: 0,
       currentProgress: new Animated.Value(0),
       correctCount: 0,
+      score: 0,
     };
 
     this.onStartPressed = this.onStartPressed.bind(this);
@@ -39,11 +41,16 @@ class Quiz extends Component {
   };
 
   render() {
-    const {deck, finished, currentIndex, currentProgress} = this.state;
+    const {
+      deck,
+      showAnswer,
+      finished,
+      currentIndex,
+      currentProgress,
+      score
+    } = this.state;
     const {width} = Dimensions.get('window');
     console.log(width);
-    console.log(deck);
-
     return (
       <View style={quizStyles.container}>
         <View style={quizStyles.deckNameArea}>
@@ -59,23 +66,50 @@ class Quiz extends Component {
         </View>
         <View style={quizStyles.progressTextArea}>
           <Text style={quizStyles.progressText}>
-            3 / 10
+            {currentIndex + 1} / {deck.contents.questions.length}
           </Text>
         </View>
 
-        <View>
-          <Text>
-            Quiz
+        <View style={quizStyles.question}>
+          <Text style={quizStyles.questionText}>
+            {deck.contents.questions[currentIndex].question}
           </Text>
         </View>
-        <View>
-          <Text>
-            Button Area
-          </Text>
-        </View>
+        {showAnswer
+          ? <View style={quizStyles.actionArea}>
+            <Button
+              onPress={() => console.log('incorrect')}
+              style={quizStyles.inCorrectButton}
+            >
+              <Text style={quizStyles.inCorrectLabel}>
+                Incorrect
+              </Text>
+            </Button>
+            <Button
+              onPress={() => console.log('correct')}
+              style={quizStyles.correctButton}
+            >
+              <Text style={quizStyles.correctLabel}>
+                Correct
+              </Text>
+            </Button>
+          </View>
+          : <View style={quizStyles.singleActionArea}>
+            <Button
+              onPress={() => console.log('show answer')}
+              style={quizStyles.showAnswerButton}
+            >
+              <Text style={quizStyles.inCorrectLabel}>
+                Show Answer
+              </Text>
+            </Button>
+          </View>
+
+        }
+
         <View style={quizStyles.scoreArea}>
-          <Text>
-            Score Area
+          <Text style={quizStyles.scoreText}>
+            Your Score: {score} %
           </Text>
         </View>
       </View>
