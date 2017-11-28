@@ -13,6 +13,8 @@ export const pink = '#ff56f9';
 export const green = '#25ff26';
 export const yellow = '#fdff1f';
 export const dark_green = '#00aa00';
+export const light_yellow = '#fbff98';
+
 
 export const buttonBorderColor = '#fff';
 export const buttonBackgroundColor= '#bb0c60';

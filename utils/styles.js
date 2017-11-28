@@ -10,6 +10,7 @@ import {
   red,
   pink,
   yellow,
+  light_yellow,
   white,
   buttonBackgroundColor,
   buttonBorderColor,
@@ -270,6 +271,19 @@ export const quizStyles = StyleSheet.create({
       justifyContent: 'flex-start',
     }
   ]),
+  checked: {
+    position: 'absolute',
+    zIndex: 1000,
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    backgroundColor: dark_green,
+    opacity: 0.5,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   progressInfoArea: {
     alignItems: 'center',
   },
@@ -329,15 +343,18 @@ export const quizStyles = StyleSheet.create({
     alignContent: 'center',
   }]),
   backSide: {
-    backgroundColor: black,
+    width: '100%',
+    backgroundColor: light_yellow,
+    position: 'absolute',
+    top:0,
   },
   questionText: {
     color: black,
     fontSize: 25,
   },
   backSideText: {
-    color: black,
-    fontSize: 20,
+    color: blue,
+    fontSize: 25,
   },
   actionArea: {
     flex: 1,
