@@ -8,6 +8,7 @@ import { StackNavigator } from 'react-navigation';
 
 /*--- Shared ---*/
 import { dark_gray, black, white } from './utils/colors';
+import SharedFunctions from './utils/sharedFunctions';
 
 /*--- Components ---*/
 import FlashcardStatusBar from './components/FlashcardStatusBar';
@@ -28,6 +29,7 @@ const MainNavigator = StackNavigator({
     screen: DeckList,
   },
   Deck: {
+    key: 'editDeck',
     screen: Deck,
   },
   NewDeck: {
@@ -42,6 +44,9 @@ const MainNavigator = StackNavigator({
 });
 
 export default class App extends Component {
+  componentDidMount(){
+    SharedFunctions.setLocalNotification();
+  }
   render() {
     return (
       <Provider store={store}>

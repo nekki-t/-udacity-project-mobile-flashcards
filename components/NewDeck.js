@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { NavigationActions } from 'react-navigation';
+
 /*--- Actions ---*/
 import { createDeck } from '../actions/deckActions';
 
@@ -41,7 +43,7 @@ class NewDeck extends Component {
 
   onChangeTitle = (value) => {
     this.setState({
-      title: value.trim()
+      title: value
     });
   };
 
@@ -55,7 +57,7 @@ class NewDeck extends Component {
       Alert.alert(
         'Invalid title',
         `Please input the title with in ${TEXT_LIMIT.DeckTitle} characters.`,
-        [{text: 'OK', onPress: () => console.log('OK')}]
+        [{text: 'OK'}]
       );
       return;
     }
@@ -65,13 +67,24 @@ class NewDeck extends Component {
       Alert.alert(
         'Deck created!',
         'Go back to the list to deck it!',
-        [{text: 'OK', onPress: () => this.props.navigation.goBack()}]
+        [{
+          text: 'OK', onPress: () => {
+            this.props.navigation
+              .dispatch(NavigationActions.reset(
+                {
+                  index: 0,
+                  actions: [
+                    NavigationActions.navigate({routeName: 'Deck', params:{deck: newDeck}})
+                  ]
+                }));
+          }
+        }]
       );
     } catch (error) {
       Alert.alert(
         'Error!',
         'Sorry... But there is something wrong. I will fix this soon.',
-        [{text: 'OK', onPress: () => console.log(error)}]
+        [{text: 'OK'}]
       );
     }
   }
@@ -99,7 +112,7 @@ class NewDeck extends Component {
           onPress={this.onAddPressed}
           style={newDeckStyles.addButton}
         >
-          Add Deck
+          Create Deck
         </Button>
       </View>
     )

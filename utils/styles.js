@@ -5,15 +5,16 @@ import {
   dark_gray,
   darker_gray,
   darkest_gray,
+  purple,
   green,
   dark_green,
   red,
+  orange,
   pink,
   yellow,
   light_yellow,
   white,
   buttonBackgroundColor,
-  buttonBorderColor,
   buttonDisabledColor,
   buttonTextColor,
 } from "./colors";
@@ -226,7 +227,7 @@ export const newQuestionStyles = StyleSheet.create({
     fontSize: 15,
     backgroundColor: '#ccc',
     padding: 5,
-    height: 100,
+    height: 50,
   },
   addButton: {
     marginTop: 10,
@@ -271,19 +272,6 @@ export const quizStyles = StyleSheet.create({
       justifyContent: 'flex-start',
     }
   ]),
-  checked: {
-    position: 'absolute',
-    zIndex: 1000,
-    top: 0,
-    bottom: 0,
-    right: 0,
-    left: 0,
-    backgroundColor: dark_green,
-    opacity: 0.5,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   progressInfoArea: {
     alignItems: 'center',
   },
@@ -298,13 +286,12 @@ export const quizStyles = StyleSheet.create({
     right: 10,
     padding: 0,
     borderRadius: 30,
+    overflow: 'hidden',
   },
   progressBarValue: {
     backgroundColor: pink,
     height: 10,
-    width: 200,
     flexDirection: 'row',
-    overflow: 'hidden',
     borderRadius: 30,
   },
   progressTextArea: {
@@ -317,6 +304,16 @@ export const quizStyles = StyleSheet.create({
     textShadowColor: black,
     textShadowOffset: {width: 2, height: 2},
     textShadowRadius: 3,
+  },
+  progressSubText: {
+    fontSize: 15,
+    color: pink,
+    textShadowColor: black,
+    textShadowOffset: {width: 2, height: 2},
+    textShadowRadius: 3,
+  },
+  progressRemainingValue: {
+    color: yellow,
   },
   deckNameArea: {
     backgroundColor: darkest_gray,
@@ -335,12 +332,12 @@ export const quizStyles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20,
     borderColor: black,
-    height: 250,
+    height: 240,
     borderWidth: 1,
     padding: 20,
     backfaceVisibility: 'hidden',
-    justifyContent: 'center',
-    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center'
   }]),
   backSide: {
     width: '100%',
@@ -407,7 +404,99 @@ export const quizStyles = StyleSheet.create({
     textShadowColor: yellow,
     textShadowOffset: {width: 1, height: 1},
     textShadowRadius: 1,
-  }
+  },
 });
+/* === < FinalScore > =================================================================== */
+export const finalScoreStyles = StyleSheet.create({
+  container: StyleSheet.flatten([containerCommonStyles.container,
+    {
+      padding: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+    }
+  ]),
+  scoreInfoArea: {
+    marginTop: 20,
+  },
+  scoreText: {
+    fontSize: 25,
+    color: green,
+  },
+  scoreValue: {
+    color: pink,
+  },
+  actionArea: {
+    marginTop: 30,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    alignSelf: 'stretch',
+  },
+  button: {
+    width: 150,
+    height: 100,
+    justifyContent: 'center',
+    backgroundColor: purple,
+  },
+  buttonLabel: {
+    fontSize: 25,
+    textShadowColor: black,
+    textShadowOffset: {width: 2, height: 2},
+    textShadowRadius: 3,
+  },
+});
+/* === < Checked > =================================================================== */
+export const checkedStyles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    zIndex: 1000,
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    backgroundColor: white,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  resultView: {
+    padding: 20,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  correctText: {
+    color: dark_green,
+    fontSize: 100,
+  },
+  inCorrectText: {
+    color: red,
+    fontSize: 100,
+  },
+  description: {
+    textAlign: 'center',
+  },
+  nextButton: {
+    width: '90%',
+    backgroundColor: blue,
+  },
+  nextButtonLabel: {
+    fontSize: 30,
+  },
+  allDoneText: {
+    fontSize: 70,
+    color: orange,
+    textAlign: 'center',
+    alignSelf: 'flex-start'
+  },
+  finishedButton: {
+    width: '90%',
+    backgroundColor: buttonBackgroundColor,
+  },
+  finishedButtonLabel: {
+    fontSize: 30,
+  },
+  finishedView: {
+    backgroundColor: darkest_gray
+  }
 
-/* === < Progressbar > =================================================================== */
+});

@@ -19,11 +19,6 @@ class FlashcardApi {
       })
   }
 
-
-  static getDeck(id) {
-
-  }
-
   static createDeck(newDeck) {
     return AsyncStorage.getItem(UDACITY_FLASHCARD_STORAGE_KEY)
       .then((result) => {

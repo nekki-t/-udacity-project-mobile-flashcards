@@ -2,17 +2,23 @@ import React, { Component } from 'react';
 /*--- redux ---*/
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { updateDeck } from '../actions/deckActions';
+import SharedFunctions from '../utils/sharedFunctions';
+
 /*--- react-native ---*/
 import {
   Animated,
   Dimensions,
   Text,
-  View
+  View,
+  Alert,
 } from 'react-native';
 /*--- utils ---*/
 import { quizStyles } from '../utils/styles';
 /*--- Components ---*/
 import Button from './Button';
+import Checked from './Checked';
+import FinalScore from './FinalScore';
 
 class Quiz extends Component {
 
@@ -29,10 +35,12 @@ class Quiz extends Component {
     this.state = {
       showAnswer: false,
       checked: false,
+      showFinalScore: false,
       deck: this.props.deck,
+      correct: false,
       currentIndex: 0,
-      currentProgress: new Animated.Value(0),
       correctCount: 0,
+      questionsCount: this.props.deck.contents.questions.length,
       score: 0,
       finished: false,
     };
@@ -40,6 +48,8 @@ class Quiz extends Component {
     this.onShowAnswer = this.onShowAnswer.bind(this);
     this.onCheck = this.onCheck.bind(this);
     this.onGotoNextQuestion = this.onGotoNextQuestion.bind(this);
+    this.onCheckFinalScore = this.onCheckFinalScore.bind(this);
+    this.onActionAfterFinished = this.onActionAfterFinished.bind(this);
   }
 
   componentWillMount() {
@@ -59,11 +69,17 @@ class Quiz extends Component {
     })
   }
 
+  getProgressValue = () => {
+    const {width} = Dimensions.get('window');
+    const ratio = (this.state.currentIndex + 1) / this.state.questionsCount;
+    return Math.ceil(width * ratio);
+  };
+
   onShowAnswer = () => {
     this.setState({
       showAnswer: true,
     });
-    if(this.value >= 90) {
+    if (this.value >= 90) {
       Animated.spring(this.animatedValue, {
         toValue: 0,
         friction: 8,
@@ -79,35 +95,113 @@ class Quiz extends Component {
   };
 
   onCheck = (correct) => {
+    let correctCount = this.state.correctCount;
     if (correct) {
-
-    } else {
-
+      correctCount += 1;
     }
 
-    this.setState({
-      checked: true,
-    });
+    const score = ((correctCount / this.state.questionsCount) * 100);
+
+    if ((this.state.currentIndex + 1) === this.state.questionsCount) {
+      this.setState({
+        checked: true,
+        finished: true,
+        correctCount,
+        correct,
+        score,
+      });
+    } else {
+      this.setState({
+        checked: true,
+        correctCount,
+        correct,
+        score,
+      });
+    }
   };
 
   onGotoNextQuestion = () => {
-
+    if (this.state.currentIndex < (this.state.questionsCount - 1)) {
+      this.setState({
+        showAnswer: false,
+        checked: false,
+        currentIndex: this.state.currentIndex + 1,
+      });
+      Animated.spring(this.animatedValue, {
+        toValue: 0,
+        friction: 8,
+        tension: 10
+      }).start();
+    } else {
+      // all done
+    }
   };
 
+  async onCheckFinalScore() {
+    const deck = this.state.deck;
+    const trainedCount = deck.contents.trained + 1;
+    const pastTotal = deck.contents.trained * deck.contents.average;
+    const newAverage = (pastTotal + this.state.score) / trainedCount;
+
+    deck.contents.trained = trainedCount;
+    deck.contents.average = newAverage;
+
+    try {
+      await this.props.actions.updateDeck(deck);
+      this.setState({
+        showAnswer: false,
+        checked: false,
+        showFinalScore: true,
+        deck: Object.assign({}, deck)
+      });
+      Animated.spring(this.animatedValue, {
+        toValue: 0,
+        friction: 8,
+        tension: 10
+      }).start();
+      SharedFunctions.clearLocalNotification()
+        .then(SharedFunctions.setLocalNotification());
+    } catch (error) {
+      Alert.alert(
+        'Save Error!',
+        'Sorry... But there is something wrong. I will fix this soon.',
+        [{text: 'OK'}]
+      );
+    }
+  };
+
+  onActionAfterFinished = (restart) => {
+    if (restart) {
+      this.setState({
+        showAnswer: false,
+        checked: false,
+        showFinalScore: false,
+        deck: this.props.deck,
+        correct: false,
+        currentIndex: 0,
+        correctCount: 0,
+        questionsCount: this.props.deck.contents.questions.length,
+        score: 0,
+        finished: false,
+      });
+    } else {
+      this.props.navigation.goBack();
+    }
+  };
 
   render() {
     const {
       deck,
       showAnswer,
+      showFinalScore,
       checked,
+      correct,
       finished,
       currentIndex,
-      currentProgress,
-      score
+      score,
+      questionsCount,
     } = this.state;
     const {width} = Dimensions.get('window');
-    console.log(width);
-
     const frontAnimatedStyle = {
       transform: [
         {rotateY: this.frontInterpolate}
@@ -120,19 +214,26 @@ class Quiz extends Component {
       ]
     };
 
+    if (showFinalScore) {
+      return (
+        <FinalScore
+          score={score}
+          trained={deck.contents.trained}
+          average={deck.contents.average}
+          onActionAfterFinished={this.onActionAfterFinished}
+        />
+      )
+    }
+
     return (
       <View style={quizStyles.container}>
         {checked &&
-        <View style={quizStyles.checked}>
-          <Text>
-            Overlay
-          </Text>
-          <Button
-            onPress={this.onGotoNextQuestion}
-          >
-
-          </Button>
-        </View>
+        <Checked
+          correct={correct}
+          finished={finished}
+          onGotoNextQuestion={this.onGotoNextQuestion}
+          onFinished={this.onCheckFinalScore}
+        />
         }
         <View style={quizStyles.deckNameArea}>
           <Text style={quizStyles.deckNameText}>
@@ -141,16 +242,18 @@ class Quiz extends Component {
         </View>
         <View style={quizStyles.progressInfoArea}>
           <View style={quizStyles.progressBarArea}>
-            <View style={quizStyles.progressBarValue}>
+            <View style={[quizStyles.progressBarValue, {width: this.getProgressValue()}]}>
             </View>
           </View>
         </View>
         <View style={quizStyles.progressTextArea}>
           <Text style={quizStyles.progressText}>
-            {currentIndex + 1} / {deck.contents.questions.length}
+            {currentIndex + 1} / {questionsCount}
+          </Text>
+          <Text style={quizStyles.progressSubText}>
+            Remaining: <Text style={quizStyles.progressRemainingValue}>{questionsCount - currentIndex} </Text>questions
           </Text>
         </View>
-
         <View>
           <Animated.View style={[quizStyles.question, frontAnimatedStyle]}>
             <Text style={quizStyles.questionText}>
@@ -198,7 +301,7 @@ class Quiz extends Component {
 
         <View style={quizStyles.scoreArea}>
           <Text style={quizStyles.scoreText}>
-            Your Score: {score} %
+            Current Score: {score.toFixed(2)} %
           </Text>
         </View>
       </View>
@@ -214,8 +317,9 @@ const mapStateToProps = (state, {navigation}) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({}, dispatch);
+  return {
+    actions: bindActionCreators({updateDeck}, dispatch)
+  };
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Quiz);

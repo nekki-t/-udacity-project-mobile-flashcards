@@ -20,7 +20,7 @@ const DeckItem = ({deck, onPress}) => {
             {deck.contents.trained} times trained
           </Text>
           <Text style={deckItemStyles.subTitleText}>
-            avg. {deck.contents.average}% correct
+            avg. {deck.contents.average.toFixed(2)}% correct
           </Text>
         </View>
       </View>

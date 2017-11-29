@@ -62,7 +62,7 @@ class NewQuestion extends Component {
       Alert.alert(
         'Invalid question or answer',
         `Please input both of the question and the answer with in ${TEXT_LIMIT.Question} characters.`,
-        [{text: 'OK', onPress: () => console.log('OK')}]
+        [{text: 'OK'}]
       );
       return;
     }
@@ -81,7 +81,7 @@ class NewQuestion extends Component {
       Alert.alert(
         'Error!',
         'Sorry... But there is something wrong. I will fix this soon.',
-        [{text: 'OK', onPress: () => console.log(error)}]
+        [{text: 'OK'}]
       );
     }
   };
@@ -104,9 +104,7 @@ class NewQuestion extends Component {
               value={question}
               onChangeText={this.onChangeQuestion}
               maxLength={TEXT_LIMIT.Question}
-              multiline={true}
-              blurOnSubmit={false}
-              numberOfLines={3}
+              returnKeyType='next'
               style={newQuestionStyles.input}
             />
             <Text style={newQuestionStyles.label}>
@@ -117,9 +115,7 @@ class NewQuestion extends Component {
               value={answer}
               onChangeText={this.onChangeAnswer}
               maxLength={TEXT_LIMIT.Answer}
-              multiline={true}
-              blurOnSubmit={false}
-              numberOfLines={3}
+              returnKeyType='next'
               style={newQuestionStyles.input}
             />
             <Button

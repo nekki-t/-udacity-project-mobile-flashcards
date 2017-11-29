@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { HeaderBackButton, NavigationActions } from 'react-navigation';
+
 import { FlatList, View } from 'react-native';
 /*--- utils ---*/
 import { deckStyles } from '../utils/styles';
@@ -16,13 +18,26 @@ class Deck extends Component {
     const {deck} = navigation.state.params;
     return {
       title: 'Deck',
+      headerLeft: <HeaderBackButton
+        title='Back'
+        onPress={() => {
+            navigation
+            .dispatch(NavigationActions.reset(
+              {
+                index: 0,
+                actions: [
+                  NavigationActions.navigate({routeName: 'Home'})
+                ]
+              }));
+        }}
+      />,
       headerTitleStyle: deckStyles.headerTitleStyle,
       headerStyle: deckStyles.headerStyle,
     }
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.startQuiz = this.startQuiz.bind(this);
     this.addCard = this.addCard.bind(this);
   }
